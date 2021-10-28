@@ -44,7 +44,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         .authenticated()
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    	final String corsOrigin="http://localhost:3002";
+    	final String corsOrigin="http://localhost:8085";
     	
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         
