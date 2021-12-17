@@ -4,7 +4,7 @@ import axios from 'axios'
 // Note that if we wouldn't set any config here we do not need
 // a named export, as we could just `import axios from 'axios'`
 const api = axios.create({
-  baseURL: 'http://localhost:8091/api/v1'
+  baseURL: 'http://192.168.1.63:8091/api/v1'
 })
 
 // for use inside Vue files through this.$axios and this.$api

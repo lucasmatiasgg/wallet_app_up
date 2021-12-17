@@ -28,9 +28,9 @@ public class UserService {
         User newUser = null;
         try {
         	if(!isCommerce) {
-        		newUser = new User(null, userName, passwordEncoder.encode(password), firstName, lastName, isCommerce, dni);
+        		newUser = new User(null, userName, passwordEncoder.encode(password), firstName, lastName, isCommerce, dni, address);
         	} else {
-        		newUser = new User(null, userName, passwordEncoder.encode(password), firstName, lastName, isCommerce, socialReason, address, cuit);
+        		newUser = new User(null, userName, passwordEncoder.encode(password), firstName, lastName, isCommerce, socialReason, address, cuit, null);
         	}
         		
         	
@@ -78,7 +78,7 @@ public class UserService {
     	UserDto userDto = userRepository.findUserByUserName(userName);
     	
     	if(userDto != null) {
-    		return new User(userDto.getId(), userDto.getUserName(), null, userDto.getFirstName(), userDto.getLastName(), userDto.isCommerce(), userDto.getSocialReason(), userDto.getAddress(), userDto.getCuit());
+    		return new User(userDto.getId(), userDto.getUserName(), null, userDto.getFirstName(), userDto.getLastName(), userDto.isCommerce(), userDto.getSocialReason(), userDto.getAddress(), userDto.getCuit(), userDto.getDni());
     	} else {
     		throw new UserNotFoundException();
     	}
@@ -89,7 +89,7 @@ public class UserService {
     	UserDto userDto = userRepository.findUserByCuit(cuit);
     	
     	if(userDto != null) {
-    		return new User(userDto.getId(), userDto.getUserName(), null, userDto.getFirstName(), userDto.getLastName(), userDto.isCommerce(), userDto.getSocialReason(), userDto.getAddress(), userDto.getCuit());    		
+    		return new User(userDto.getId(), userDto.getUserName(), null, userDto.getFirstName(), userDto.getLastName(), userDto.isCommerce(), userDto.getSocialReason(), userDto.getAddress(), userDto.getCuit(), userDto.getDni());    		
     	} else {
     		throw new UserNotFoundException();
     	}
@@ -111,5 +111,17 @@ public class UserService {
     		throw new UserNotFoundException();
     	}
     	
+    }
+    
+    public void deleteUser(Long id) {
+    	userRepository.deleteById(id);
+    }
+    
+    public User modifyUser(Long userId, User user) {
+    	
+    	userRepository.updateUser(userId, user.getFirstName(), user.getLastName(), user.getAddress(), user.getDni());
+    	User userUpdated = getInfoById(userId);
+    	
+    	return userUpdated;
     }
 }

@@ -1,8 +1,10 @@
 package com.up.tx.manager.login.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.up.tx.manager.login.dto.UserDto;
 import com.up.tx.manager.login.model.User;
@@ -34,4 +36,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "FROM User u \n" +
             "WHERE u.userName= ?1" )
     Long getUserId(String userName);
+    
+    @Transactional
+	@Modifying
+	@Query("UPDATE User " +
+            "SET first_name = ?2, last_name = ?3, address = ?4, dni = ?5 \n" +
+            "WHERE id = ?1" )
+	void updateUser(Long id, String firstName, String lastName, String address, String dni);
 }

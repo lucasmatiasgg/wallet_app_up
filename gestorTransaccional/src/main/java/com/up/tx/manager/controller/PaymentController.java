@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.up.tx.manager.connectors.ApiConnector;
 import com.up.tx.manager.exceptions.FundsInsufficientsException;
 import com.up.tx.manager.login.model.User;
 import com.up.tx.manager.login.service.UserService;
@@ -29,11 +28,11 @@ import com.up.tx.manager.service.TransactionService;
 @RequestMapping("/v1/payments")
 public class PaymentController {
 	
-	private static final String PAYMENT_TYPE = "Payment";
-	private static final String CONFIRMED = "CONFIRMED";
-	private static final String REJECTED = "REJECTED";
-	private static final String TRANSFER_CVU_TYPE = "CVUTransfer";
-	private static final String CASH_IN_TYPE = "CashIn";
+	private static final String PAYMENT_TYPE = "Pago";
+	private static final String CONFIRMED = "Confirmada";
+	private static final String REJECTED = "Rechazada";
+	private static final String TRANSFER_CVU_TYPE = "Transferencia por CVU";
+	private static final String CASH_IN_TYPE = "Ingreso de dinero";
 	
 	@Autowired
 	TransactionService transactionService;
@@ -110,12 +109,6 @@ public class PaymentController {
     			 String cvuOrAlias = byAlias ? transfer.getAliasCVU().toUpperCase() : transfer.getCvu();
     			 
     			 if(transfer.getAmount() != null  && transfer.getOriginUserId() != null) {
-				 // 	TODO la llamada a la api para realizar tranasferencias se entrega en el proximo release
-    				 
-	//    			Response apiResponse = ApiConnector.processTransaction(payment,transaction,configurationService, userService);
-	    				 
-	//    			Integer statusCode = (Integer) apiResponse.getData().get("statusCode");
-	//    			if(statusCode.equals(ApiConnector.TRANSACTION_OK_CODE)) {
     				 
 					 Double newBalance = accountService.updateAccountBalanceByAliasOrCVU(cvuOrAlias, transfer.getAmount(), byAlias, transfer.getOriginUserId());
     					 
@@ -131,7 +124,6 @@ public class PaymentController {
     				 response.putItem(Constants.STATUS_CODE, Constants.RESPONSE_OK_CODE);
     				 return ResponseEntity.ok(response);
     			 }
-//    		}
     		 }
 			
 			transaction.setStatus(REJECTED);
@@ -166,12 +158,6 @@ public class PaymentController {
     		
     		
     		if(payment.getAmount() != null && payment.getOriginUserId() != null) {
-    			// 	TODO Aca tiene que ir la llamada a la api para ingresar dinero
-
-//    			Response apiResponse = ApiConnector.processTransaction(payment,transaction,configurationService, userService);
-    			
-//    			Integer statusCode = (Integer) apiResponse.getData().get("statusCode");
-//    			if(statusCode.equals(ApiConnector.TRANSACTION_OK_CODE)) {
     				
     				Double newBalance = accountService.updateAccountBalance(payment.getOriginUserId(), payment.getAmount());
     			
@@ -188,8 +174,6 @@ public class PaymentController {
     				return ResponseEntity.ok(response);
     			}
     			
-//    		}
-			
 			transaction.setStatus(REJECTED);
 			transactionService.create(transaction);
 			response.putItem("transactionId", transaction.getTransactionId());

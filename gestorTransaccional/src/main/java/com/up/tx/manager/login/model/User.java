@@ -44,7 +44,7 @@ public class User {
 
     }
 
-    public User(Long id, String userName, String password, String firstName, String lastName, boolean isCommerce, String dni) {
+    public User(Long id, String userName, String password, String firstName, String lastName, boolean isCommerce, String dni, String address) {
         this.id = id;
     	this.userName = userName;
         this.password = password;
@@ -52,9 +52,10 @@ public class User {
         this.lastName = lastName;
         this.dni = dni;
         this.isCommerce = isCommerce;
+        this.address = address;
     }
     
-    public User(Long id, String userName, String password, String firstName, String lastName, boolean isCommerce, String socialReason, String address, String cuit) {
+    public User(Long id, String userName, String password, String firstName, String lastName, boolean isCommerce, String socialReason, String address, String cuit, String dni) {
     	this.id = id;
     	this.userName = userName;
         this.password = password;
@@ -64,6 +65,7 @@ public class User {
         this.socialReason = socialReason;
         this.address = address;
         this.cuit = cuit;
+        this.dni = dni;
     }
 
     public Long getId() {

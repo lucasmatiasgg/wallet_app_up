@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.up.tx.manager.dto.AccountDto;
 import com.up.tx.manager.exceptions.AccountNotFoundException;
+import com.up.tx.manager.exceptions.AccountWithBalanceException;
 import com.up.tx.manager.exceptions.FundsInsufficientsException;
 import com.up.tx.manager.login.controller.UserController;
 import com.up.tx.manager.model.Account;
@@ -145,5 +146,19 @@ public class AccountService {
     	}
     		
     	return newTargetBalance;
+    }
+    
+    public void deleteAccount(Long idUser) {
+    	
+    	AccountDto accountDto = repository.findAccountByUserId(idUser);
+    	
+    	if(accountDto != null) {
+    		if (accountDto.getAccountBalance() == 0 ) {
+    			repository.deleteById(accountDto.getId());
+    		} else {
+    			throw new AccountWithBalanceException();
+    		}
+    	}
+//    	repository.deleteById(idUser);
     }
 }

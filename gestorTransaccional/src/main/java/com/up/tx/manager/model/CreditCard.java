@@ -1,25 +1,65 @@
 package com.up.tx.manager.model;
 
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name= "creditCard")
 public class CreditCard {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "idUser")
+	private Long idUser;
+	
+	@Column(name = "number")
 	private String number;
+	
+	@Column(name = "name")
 	private String name;
-	private Date expirationDate;
+	
+	@Column(name = "expirationDate")
+	private String expirationDate;
+	
+	@Column(name = "brand")
 	private String brand;
+	
+	@Column(name = "verificationCode")
 	private Integer verificationCode;
 	
 	public CreditCard() {
 		
 	}
 
-	public CreditCard(String number, String name, Date expirationDate, String brand, Integer verificationCode) {
+	public CreditCard(Long idUser, String number, String name, String expirationDate, String brand, Integer verificationCode) {
+		this.idUser = idUser;
 		this.number = number;
 		this.name = name;
 		this.expirationDate = expirationDate;
 		this.brand = brand;
 		this.verificationCode = verificationCode;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
 	}
 
 	public String getNumber() {
@@ -38,11 +78,11 @@ public class CreditCard {
 		this.name = name;
 	}
 
-	public Date getExpirationDate() {
+	public String getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 

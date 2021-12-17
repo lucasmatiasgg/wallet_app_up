@@ -1,6 +1,7 @@
 package com.up.tx.manager.model;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -47,6 +48,17 @@ public class Transaction {
     public Transaction(Double amount, String transactionType, Long originUserId, String targetCuit, String status) {
     	this.timestamp = ZonedDateTime.now();
     	this.transactionId = UUID.randomUUID().toString();
+    	this.amount = amount;
+    	this.transactionType = transactionType;
+    	this.originUserId = originUserId;
+    	this.targetCuit = targetCuit;
+    	this.status = status;
+    }
+    
+    public Transaction(Long id, ZonedDateTime timestamp, String transactionId, Double amount, String transactionType, Long originUserId, String targetCuit, String status) {
+    	this.id = id;
+    	this.timestamp = timestamp;
+    	this.transactionId = transactionId;
     	this.amount = amount;
     	this.transactionType = transactionType;
     	this.originUserId = originUserId;

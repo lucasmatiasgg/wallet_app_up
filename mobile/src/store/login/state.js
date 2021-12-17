@@ -1,3 +1,5 @@
 export default {
-  exchangeToken: ''
+  exchangeToken: '',
+  userNameLogged: '',
+  userIdLogged: ''
 }
