@@ -26,9 +26,6 @@ pipeline {
                     //archiveArtifacts 'target/*.jar'
                     echo "Pipeline finalize succefully"
                 }
-                always {
-                    cleanWs()
-                }
             }
         }
         stage('Run Tests') {
@@ -48,9 +45,6 @@ pipeline {
                     //junit '**/target/surefire-reports/TEST-*.xml'
                     //archiveArtifacts 'target/*.jar'
                     echo "Test executed succefully"
-                }
-                always {
-                    cleanWs()
                 }
             }
         }
