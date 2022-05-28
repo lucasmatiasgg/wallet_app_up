@@ -15,7 +15,7 @@ pipeline {
                 sh "mvn -version"
 
                 // Run Maven on a Unix agent.
-                withSonarQubeEnv(installationName: 'SonarQube9.4', credentialsId: 'SonarQubeToken') {
+                withSonarQubeEnv(installationName: 'SonarQube9.4', credentialsId: 'jenkinsUserInSonar') {
                     sh "mvn -Dmaven.test.skip=true  clean package -f gestorTransaccional/pom.xml sonar:sonar"
                 }
 
