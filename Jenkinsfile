@@ -10,12 +10,15 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Scan and Build code') {
             steps {
                 sh "mvn -version"
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.skip=true  clean package -f gestorTransaccional/pom.xml"
+                withSonarQubeEnv(installationName: 'SonarQubeScanner4.7', credentialsId: 'SonarQubeToken') {
+                    sh "mvn -Dmaven.test.skip=true  clean package -f gestorTransaccional/pom.xml sonar:sonar"
+                }
+
                 
             }
             options {
