@@ -5,6 +5,9 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "3.8.1"
     }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    }
 
     stages {
         stage('Build') {
