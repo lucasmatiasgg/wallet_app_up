@@ -10,16 +10,27 @@ pipeline {
     }
 
     stages {
-        stage('Scan and Build code') {
+        stage('Scan code') {
             steps {
-                
-                sh "mvn -version"
-
                 withSonarQubeEnv(installationName: 'SonarQube9.4', credentialsId: 'jenkinsUserInSonar') {
-                    sh "mvn -Dmaven.test.skip=true  clean package -f gestorTransaccional/pom.xml sonar:sonar"
+                    // sh "mvn -Dmaven.test.skip=true  clean package -f gestorTransaccional/pom.xml sonar:sonar"
                 }
 
                 
+            }
+            options {
+                timeout(time: 5, unit: "MINUTES")
+            }
+            post {
+                success {
+                    echo "Scan finalize succefully"
+                }
+            }
+        }
+        stage('Build code') {
+            steps {
+                sh "mvn -version"
+                sh "mvn -Dmaven.test.skip=true  clean package -f gestorTransaccional/pom.xml sonar:sonar"
             }
             options {
                 timeout(time: 5, unit: "MINUTES")
