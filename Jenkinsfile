@@ -48,7 +48,7 @@ pipeline {
             steps {
                 echo "Start Deploy"
                 script {
-                  deploy adapters: [tomcat9(credentialsId: 'tomcat_credential', path: '', url: 'http://localhost:8080')], contextPath: '/pipeline', onFailure: false, war: 'webapp/target/*.war' 
+                  deploy adapters: [tomcat9(credentialsId: 'tomcat_credential', path: '', url: 'http://localhost:8080')], contextPath: '/pipeline', onFailure: false, war: '**/*.war' 
                 }
             }
             options {
