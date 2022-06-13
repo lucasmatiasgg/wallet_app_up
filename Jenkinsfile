@@ -12,9 +12,9 @@ pipeline {
     stages {
         stage('Scan and Build code') {
             steps {
+                
                 sh "mvn -version"
 
-                // Run Maven on a Unix agent.
                 withSonarQubeEnv(installationName: 'SonarQube9.4', credentialsId: 'jenkinsUserInSonar') {
                     sh "mvn -Dmaven.test.skip=true  clean package -f gestorTransaccional/pom.xml sonar:sonar"
                 }
@@ -25,19 +25,13 @@ pipeline {
                 timeout(time: 5, unit: "MINUTES")
             }
             post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
                 success {
-                    //junit '**/target/surefire-reports/TEST-*.xml'
-                    //archiveArtifacts 'target/*.jar'
-                    echo "Pipeline finalize succefully"
+                    echo "Scan finalize succefully"
                 }
             }
         }
         stage('Run Tests') {
             steps {
-
-                // Run Maven on a Unix agent.
                 sh "mvn test -f gestorTransaccional/pom.xml"
                 
             }
@@ -45,19 +39,13 @@ pipeline {
                 timeout(time: 5, unit: "MINUTES")
             }
             post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
                 success {
-                    //junit '**/target/surefire-reports/TEST-*.xml'
-                    //archiveArtifacts 'target/*.jar'
                     echo "Test executed succefully"
                 }
             }
         }
         stage('Deploy') {
             steps {
-
-                // Run Maven on a Unix agent.
                 echo "Start Deploy"
             }
             options {
