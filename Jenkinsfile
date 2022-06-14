@@ -13,7 +13,7 @@ pipeline {
         stage('Scan code') {
             steps {
                 withSonarQubeEnv(installationName: 'SonarQube9.4', credentialsId: 'jenkinsUserInSonar') {
-                    sh "mvn clean verify sonar:sonar-Dmaven.test.skip=true -f gestorTransaccional/pom.xml "
+                    sh "mvn clean verify sonar:sonar -Dmaven.test.skip=true -f gestorTransaccional/pom.xml "
                 }
 
                 
