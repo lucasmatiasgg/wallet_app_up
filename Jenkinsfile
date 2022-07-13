@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
         maven "3.8.1"
     }
     options {
@@ -15,8 +14,6 @@ pipeline {
                 withSonarQubeEnv(installationName: 'SonarQube9.4', credentialsId: 'jenkinsUserInSonar') {
                     sh "mvn clean verify sonar:sonar -Dmaven.test.skip=true -f gestorTransaccional/pom.xml "
                 }
-
-                
             }
             options {
                 timeout(time: 5, unit: "MINUTES")
@@ -44,7 +41,6 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh "mvn test -f gestorTransaccional/pom.xml"
-                
             }
             options {
                 timeout(time: 5, unit: "MINUTES")

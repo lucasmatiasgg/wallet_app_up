@@ -54,7 +54,7 @@ public class SecurityController {
 
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthenticationResponse((jwt)));
+        return ResponseEntity.ok(new AuthenticationResponse((jwt), "TEST"));
     }
     
 //    public static String generateJwtToken(String user, String pass) {
