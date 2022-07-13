@@ -54,7 +54,7 @@ public class SecurityController {
 
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthenticationResponse((jwt), "Prueba"));
+        return ResponseEntity.ok(new AuthenticationResponse((jwt), "POC-TFG"));
     }
     
 }
